@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using Shops.Classes;
 
-namespace Shops
+namespace Shops.Interfaces
 {
     public interface ISupplyRepository
     {

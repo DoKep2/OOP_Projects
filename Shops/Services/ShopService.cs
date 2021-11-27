@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Shops.Classes;
+using Shops.Exceptions;
+using Shops.Interfaces;
+using Shops.Repositories;
 
-namespace Shops
+namespace Shops.Services
 {
     public class ShopService
     {
@@ -20,10 +24,10 @@ namespace Shops
             OrderRepository = orderRepository;
         }
 
-        public IShopRepository ShopRepository { get; }
-        public ProductRepository ProductRepository { get; }
-        public ISupplyRepository SupplyRepository { get; }
-        public IOrderRepository OrderRepository { get; }
+        private IShopRepository ShopRepository { get; }
+        private ProductRepository ProductRepository { get; }
+        private ISupplyRepository SupplyRepository { get; }
+        private IOrderRepository OrderRepository { get; }
 
         public Shop CreateShop(string name, int id)
         {
@@ -34,7 +38,7 @@ namespace Shops
 
         public Shop ShopWithCheapestOption(List<Product> products)
         {
-            int minimumCost = int.MaxValue;
+            int? minimumCost = null;
             Shop cheapestShop = null;
             foreach (Shop currentShop in ShopRepository.GetAll())
             {
@@ -53,21 +57,25 @@ namespace Shops
                     totalCost += findingProduct.Price;
                 }
 
-                if (totalCost < minimumCost)
+                if (minimumCost == null || totalCost <= minimumCost)
                 {
-                    minimumCost = Math.Min(minimumCost, totalCost);
+                    minimumCost = totalCost;
                     cheapestShop = currentShop;
                 }
             }
 
-            if (cheapestShop == null) throw new ArgumentException("No such shop with such products list");
+            if (cheapestShop == null)
+            {
+                throw new ShopException("Finding the cheapest shop error: No such shop with such products list");
+            }
+
             return cheapestShop;
         }
 
         public void AddProducts(List<Product> products, int shopId)
         {
             if (ShopRepository.Find(shopId) == null)
-                throw new ArgumentException("Adding products error: no such shop");
+                throw new ShopException("Adding products error: no such shop");
             foreach (Product addedProduct in products)
             {
                 Product findingProduct = ProductRepository.Find(addedProduct.ProductId, addedProduct.ShopId);
@@ -89,20 +97,20 @@ namespace Shops
 
         public void Purchase(ref Customer customer, List<Product> products, int shopId)
         {
-            if (ShopRepository.Find(shopId) == null) throw new ArgumentException("Purchase error: no such shop");
+            if (ShopRepository.Find(shopId) == null) throw new ShopException("Purchase error: no such shop");
             int totalCost = 0;
             foreach (Product currentProduct in products)
             {
                 Product findingProduct = ProductRepository.Find(currentProduct.ProductId, shopId);
                 if (findingProduct == null)
                 {
-                    throw new ArgumentException(
+                    throw new ShopException(
                         $"Purchase error: shop does not contain such product: {currentProduct.Name}");
                 }
 
                 if (findingProduct.Amount < currentProduct.Amount)
                 {
-                    throw new ArgumentException(
+                    throw new ShopException(
                         $"Purchase error: shop does not contain enough products: {currentProduct.Name}");
                 }
 
@@ -111,7 +119,7 @@ namespace Shops
 
             if (totalCost > customer.Money)
             {
-                throw new ArgumentException(
+                throw new ShopException(
                     $"Purchase error: customer {customer.Name} does not have enough money");
             }
 

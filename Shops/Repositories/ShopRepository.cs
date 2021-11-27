@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Shops.Classes;
+using Shops.Interfaces;
 
-namespace Shops
+namespace Shops.Repositories
 {
     public class ShopRepository : IShopRepository
     {
@@ -20,20 +23,12 @@ namespace Shops
 
         public List<Shop> GetAll()
         {
-            return _shopsList;
+            return new List<Shop>(_shopsList);
         }
 
         public Shop Find(int id)
         {
-            foreach (Shop currentShop in _shopsList)
-            {
-                if (currentShop.Id == id)
-                {
-                    return currentShop;
-                }
-            }
-
-            return null;
+            return _shopsList.FirstOrDefault(currentShop => currentShop.Id == id);
         }
 
         public void Print()

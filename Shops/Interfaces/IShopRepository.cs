@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using Shops.Classes;
 
-namespace Shops
+namespace Shops.Interfaces
 {
     public interface IShopRepository
     {
         Shop RegisterShop(Shop shop);
-        List<Shop> GetAll();
+        public List<Shop> GetAll();
         Shop Find(int id);
         void Print();
     }

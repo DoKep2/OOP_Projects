@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Microsoft.VisualBasic.FileIO;
+using Shops.Classes;
+using Shops.Exceptions;
+using Shops.Repositories;
 
-namespace Shops
+namespace Shops.Services
 {
     public class ProductService
     {
@@ -12,28 +11,13 @@ namespace Shops
             ProductRepository = productRepository;
         }
 
-        public ProductRepository ProductRepository { get; }
-        /*public Product RegisterProduct(string name)
-        {
-            if (ProductRepository.Contains(name) != null)
-            {
-                return null;
-            }
-
-            Product product = new Product.ProductBuilder()
-                .WithName(name)
-                .WithProductId(_curId++)
-                .Build();
-            ProductRepository.RegisterProduct(product);
-            return product;
-        }*/
-
+        private ProductRepository ProductRepository { get; }
         public void UpdatePrice(int productId, int shopId, int newPrice)
         {
             Product previousProduct = ProductRepository.Delete(productId, shopId);
             if (previousProduct == null)
             {
-                throw new ArgumentException("Updating product price error: no such product");
+                throw new ProductException("Updating product price error: no such product");
             }
 
             Product newProduct = new Product.ProductBuilder()

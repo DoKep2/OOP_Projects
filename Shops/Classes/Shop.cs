@@ -1,6 +1,4 @@
-using System.Collections.Immutable;
-
-namespace Shops
+namespace Shops.Classes
 {
     public class Shop
     {

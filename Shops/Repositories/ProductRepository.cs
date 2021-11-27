@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Shops.Classes;
+using Shops.Interfaces;
 
-namespace Shops
+namespace Shops.Repositories
 {
     public class ProductRepository : IProductRepository
     {
@@ -21,33 +23,18 @@ namespace Shops
 
         public List<Product> GetAll()
         {
-            return _productsList;
+            return new List<Product>(_productsList);
         }
 
         public Product Find(int productId, int shopId)
         {
-            foreach (Product currentProduct in _productsList)
-            {
-                if (currentProduct.ProductId == productId && currentProduct.ShopId == shopId)
-                {
-                    return currentProduct;
-                }
-            }
-
-            return null;
+            return _productsList.FirstOrDefault(currentProduct => currentProduct.ProductId == productId
+                                                                  && currentProduct.ShopId == shopId);
         }
 
         public Product Contains(string name)
         {
-            foreach (Product currentProduct in _productsList)
-            {
-                if (currentProduct.Name == name)
-                {
-                    return currentProduct;
-                }
-            }
-
-            return null;
+            return _productsList.FirstOrDefault(currentProduct => currentProduct.Name == name);
         }
 
         public Product Delete(int productId, int shopId)

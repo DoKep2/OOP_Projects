@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
-namespace Shops
+namespace Shops.Classes
 {
     public class Order
     {
-        public Order(List<Product> products, int orderId, int shopId)
+        private Order(List<Product> products, int orderId, int shopId)
         {
             Products = products;
             OrderId = orderId;

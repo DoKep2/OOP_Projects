@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Shops.Classes;
+using Shops.Interfaces;
 
-namespace Shops
+namespace Shops.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
@@ -20,25 +23,17 @@ namespace Shops
 
         public List<Order> GetAll()
         {
-            return _ordersList;
+            return new List<Order>(_ordersList);
         }
 
         public Order Find(int id)
         {
-            foreach (Order currentOrder in _ordersList)
-            {
-                if (currentOrder.OrderId == id)
-                {
-                    return currentOrder;
-                }
-            }
-
-            return null;
+            return _ordersList.FirstOrDefault(currentOrder => currentOrder.OrderId == id);
         }
 
         public void Print()
         {
-            foreach (var currentOrder in _ordersList)
+            foreach (Order currentOrder in _ordersList)
             {
                 Console.WriteLine($"Order id: {currentOrder.OrderId}, shop id: {currentOrder.ShopId}, products list:");
                 foreach (Product currentProduct in currentOrder.Products)

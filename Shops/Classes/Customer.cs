@@ -1,4 +1,4 @@
-namespace Shops
+namespace Shops.Classes
 {
     public class Customer
     {
