@@ -1,4 +1,4 @@
-﻿namespace Backups
+﻿namespace Backups.Classes
 {
     internal class Program
     {
