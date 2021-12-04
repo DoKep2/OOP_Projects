@@ -1,7 +1,4 @@
-﻿using System.Dynamic;
-using System.Net.NetworkInformation;
-
-namespace Isu.Services
+﻿namespace Isu.Classes
 {
     public class Student
     {
@@ -11,17 +8,17 @@ namespace Isu.Services
         {
             Id = _curId;
             Name = name;
-            NameGroup = null;
+            Group = null;
             _curId++;
         }
 
         public int Id { get; set; }
 
         public string Name { get; set; }
-        public GroupName NameGroup { get; set; }
+        public Group Group { get; set; }
         public override string ToString()
         {
-            return $"{string.Format("{0:D4}", Id)}, {Name}, {NameGroup}";
+            return $"{Id:D4}, {Name}, {Group}";
         }
     }
 }
