@@ -1,8 +1,8 @@
-﻿namespace Shops
+namespace Shops
 {
-    internal class Program
+    public class Program
     {
-        private static void Main()
+        public static void Main()
         {
         }
     }
