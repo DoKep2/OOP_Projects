@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using System.Security.Principal;
 
-namespace Shops
+namespace Shops.Classes
 {
     public class Supply
     {

@@ -1,4 +1,4 @@
-namespace Shops.Classes
+namespace Shops
 {
     public class Program
     {
