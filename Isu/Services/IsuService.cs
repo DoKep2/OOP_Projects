@@ -2,7 +2,6 @@
 using System.Linq;
 using Isu.Classes;
 using Isu.Interfaces;
-using Isu.Repositories;
 using Isu.Tools;
 
 namespace Isu.Services
