@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Backups.Classes;
 using Backups.Exceptions;
 using Backups.Interfaces;
@@ -21,12 +22,10 @@ namespace Backups.Services
 
         public BackupJob GetBackUpJob(string name)
         {
-            foreach (BackupJob currentBackupJob in _backupJobs)
+            foreach (BackupJob currentBackupJob in _backupJobs
+                .Where(currentBackupJob => name.Equals(currentBackupJob.BackupJobName)))
             {
-                if (name.Equals(currentBackupJob.BackupJobName))
-                {
-                    return currentBackupJob;
-                }
+                return currentBackupJob;
             }
 
             throw new BackupsException("Getting backup job error: no such backup job");

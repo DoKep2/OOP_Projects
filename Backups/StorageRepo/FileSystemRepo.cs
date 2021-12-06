@@ -21,7 +21,7 @@ namespace Backups.StorageRepo
                 new FileStream(zipPath, FileMode.Create), ZipArchiveMode.Create);
             foreach (JobObject entity in entities)
             {
-                zipArchive.CreateEntryFromFile($"{entity.Path}\\{entity.Name}", entity.Name);
+                zipArchive.CreateEntryFromFile(Path.Combine(entity.Path, entity.Name), entity.Name);
             }
 
             zipArchive.Dispose();

@@ -40,7 +40,6 @@ namespace Backups.StorageRepo
 
             foreach (string newFile in newFiles)
             {
-                Console.WriteLine(newFile);
                 Files.Add(newFile);
             }
         }

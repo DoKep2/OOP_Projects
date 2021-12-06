@@ -33,7 +33,7 @@ namespace Backups.Classes
         public string CreateRestorePoint()
         {
             int restorePointNumber = StorageRepo.GetRestorePointsAmount(BackupJobPath) + 1;
-            string restorePointPath = $"{BackupJobPath}\\RestorePoint{restorePointNumber}";
+            string restorePointPath = Path.Combine(BackupJobPath, "RestorePoint" + restorePointNumber);
             List<Storage> storages = _storageAlgo.CreateStorages(_jobObjects);
             var restorePoint = new RestorePoint(storages, _storageAlgo, StorageRepo, BackupJobPath, restorePointNumber);
             _restorePoints.Add(restorePoint);

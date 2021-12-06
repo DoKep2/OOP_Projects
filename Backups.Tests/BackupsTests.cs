@@ -31,10 +31,10 @@ namespace Backups.Tests
             Assert.IsTrue(_storageRepo.FolderExists(Path.Combine(RootPath, "BackupJob1")));
         }
         [Test]
-        public void CreateRestorePoints_WithSplitAlgo_CreatedOneStorage()
+        public void CreateRestorePoints_WithSingleAlgo_CreatedOneStorage()
         {
             BackupJob backupJob = _backupService.CreateBackupJob(
-                new SplitStorages(),
+                new SingleStorage(),
                 _storageRepo,
                 "BackupJob1",
                 RootPath);
@@ -45,10 +45,10 @@ namespace Backups.Tests
             Assert.AreEqual(_storageRepo.GetStoragesAmount(restorePointPath), 1);
         }
         [Test]
-        public void CreateRestorePoint_WithSingleAlgo_CreatedSeveralStorages()
+        public void CreateRestorePoint_WithSplitAlgo_CreatedSeveralStorages()
         {
             BackupJob backupJob = _backupService.CreateBackupJob(
-                new SingleStorage(),
+                new SplitStorages(),
                 _storageRepo,
                 "BackupJob1",
                 RootPath);
@@ -67,7 +67,7 @@ namespace Backups.Tests
         public void ExtractStorage_StorageNotChanged_FolderHasSameFiles()
         {
             BackupJob backupJob = _backupService.CreateBackupJob(
-                new SplitStorages(),
+                new SingleStorage(),
                 _storageRepo,
                 "BackupJob1",
                 RootPath);

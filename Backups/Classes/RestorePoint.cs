@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Backups.Exceptions;
 using Backups.Interfaces;
 
 namespace Backups.Classes
@@ -15,8 +16,14 @@ namespace Backups.Classes
             string path,
             int id)
         {
-            _storages = storages;
-            _storageAlgo = storageAlgo;
+            _storages = storages ?? throw new BackupsException("Create restore point error: storages can't be null");
+            _storageAlgo = storageAlgo ??
+                           throw new BackupsException("Create restore point error: storageAlgo can't be null");
+            if (storageRepo == null)
+            {
+                throw new BackupsException("Create restore point error: storageRepo can't be null");
+            }
+
             storageRepo.CreateFolder(path, $"RestorePoint{id}");
         }
     }

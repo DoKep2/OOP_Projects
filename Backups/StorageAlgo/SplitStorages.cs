@@ -7,10 +7,15 @@ namespace Backups.StorageAlgo
     public class SplitStorages : IStorageAlgo
     {
         private readonly List<JobObject> _jobObjects = new List<JobObject>();
-
         public List<Storage> CreateStorages(List<JobObject> jobObjects)
         {
-            return new List<Storage>() { new Storage(jobObjects) };
+            var storages = new List<Storage>();
+            for (int i = 0; i < jobObjects.Count; i++)
+            {
+                storages.Add(new Storage(new List<JobObject>() { jobObjects[i] }));
+            }
+
+            return storages;
         }
     }
 }
