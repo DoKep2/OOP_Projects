@@ -8,7 +8,7 @@ namespace Backups.Services
 {
     public class BackupService
     {
-        private readonly List<BackupJob> _backupJobs = new ();
+        public List<BackupJob> BackupJobs { get; } = new ();
         public BackupJob CreateBackupJob(
             IStorageAlgo storageAlgo,
             IStorageRepo storageRepo,
@@ -16,13 +16,13 @@ namespace Backups.Services
             string rootPath)
         {
             var newBackupJob = new BackupJob(storageAlgo, storageRepo, rootPath, backupJobName);
-            _backupJobs.Add(newBackupJob);
+            BackupJobs.Add(newBackupJob);
             return newBackupJob;
         }
 
         public BackupJob GetBackUpJob(string name)
         {
-            foreach (BackupJob currentBackupJob in _backupJobs
+            foreach (BackupJob currentBackupJob in BackupJobs
                 .Where(currentBackupJob => name.Equals(currentBackupJob.BackupJobName)))
             {
                 return currentBackupJob;

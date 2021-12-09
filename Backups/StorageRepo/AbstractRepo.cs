@@ -8,12 +8,41 @@ namespace Backups.StorageRepo
 {
     public class AbstractRepo : IStorageRepo
     {
-        private List<string> Folders { get; } = new List<string>();
-        private List<string> Files { get; } = new List<string>();
+        public List<string> Folders { get; } = new List<string>();
+        public List<string> Files { get; } = new List<string>();
 
         public void CreateFolder(string path, string name)
         {
             Folders.Add(Path.Combine(path, name));
+        }
+
+        public void DeleteFolder(string path, string name)
+        {
+            string fullPath = Path.Combine(path, name);
+            if (!FolderExists(fullPath))
+            {
+                throw new Exception("No such folder to delete");
+            }
+
+            Folders.Remove(fullPath);
+            foreach (string file in Files)
+            {
+                if (file.StartsWith(fullPath))
+                {
+                    Files.Remove(file);
+                }
+            }
+        }
+
+        public void DeleteArchive(string path, string name)
+        {
+            string fullPath = Path.Combine(path, name);
+            if (!FileExists(fullPath))
+            {
+                throw new Exception("No such file to delete");
+            }
+
+            Files.Remove(fullPath);
         }
 
         public void CreateArchive(List<JobObject> entities, string pathToFolder, string archiveName)

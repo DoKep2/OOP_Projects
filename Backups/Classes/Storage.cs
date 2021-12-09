@@ -4,11 +4,15 @@ namespace Backups.Classes
 {
     public class Storage
     {
-        public Storage(List<JobObject> jobObjects)
+        public Storage(List<JobObject> jobObjects, string path, int id)
         {
-            JobObjects = jobObjects;
+            JobObjects = new List<JobObject>(jobObjects);
+            Path = path;
+            Id = id;
         }
 
         public List<JobObject> JobObjects { get; }
+        public string Path { get; }
+        public int Id { get; }
     }
 }
