@@ -6,22 +6,20 @@ using Backups.Interfaces;
 
 namespace Backups.Classes
 {
-    public class RestorePoint
+    public class RestorePoint : RestorePointComponent
     {
         public RestorePoint(
             List<Storage> storages,
             IStorageAlgo storageAlgo,
             IStorageRepo storageRepo,
             string path,
-            int id,
-            DateTime dateTime)
+            int id)
         {
             Storages = storages; /*?? throw new BackupsException("Create restore point error: storages can't be null");*/
             StorageAlgo = storageAlgo;
             StorageRepo = storageRepo;
             Id = id;
-            Path = path;
-            DateTime = dateTime; /*??
+            Path = path; /*??
                            throw new BackupsException("Create restore point error: storageAlgo can't be null");*/
             /*if (storageRepo == null)
             {
@@ -30,15 +28,9 @@ namespace Backups.Classes
             /*storageRepo?.CreateFolder(path, $"RestorePoint{id}");*/
         }
 
-        public List<Storage> Storages { get; }
-        public IStorageAlgo StorageAlgo { get; }
-        public IStorageRepo StorageRepo { get; }
-        public string Path { get; }
-        public int Id { get; }
-        public DateTime DateTime { get; }
-        public Storage FindStorage(Storage storage)
+        /*public Storage FindStorage(Storage storage)
         {
             return Storages.SingleOrDefault(st => Equals(st, storage));
-        }
+        }*/
     }
 }

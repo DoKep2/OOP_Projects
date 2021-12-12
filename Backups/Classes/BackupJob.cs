@@ -5,7 +5,7 @@ using Backups.Interfaces;
 
 namespace Backups.Classes
 {
-    public class BackupJob
+    public class BackupJob : BackupJobComponent
     {
         public BackupJob(
             IStorageAlgo storageAlgo,
@@ -22,30 +22,7 @@ namespace Backups.Classes
             StorageRepo?.CreateFolder(RootPath, backupJobName);
         }
 
-        public IStorageAlgo StorageAlgo { get; }
-        public List<JobObject> JobObjects { get; }
-
-        public LinkedList<RestorePoint> RestorePoints { get; protected set; }
-        public string RootPath { get; }
-        public string BackupJobName { get; }
-        public IStorageRepo StorageRepo { get; }
-        public string BackupJobPath => Path.Combine(RootPath, BackupJobName);
-
-        public void CreateRestorePoint(RestorePoint restorePoint)
-        {
-            string restorePointPath = Path.Combine(BackupJobPath, "RestorePoint" + restorePoint.Id);
-            StorageRepo?.CreateFolder(BackupJobPath, $"RestorePoint{restorePoint.Id}");
-            int storageNumber = 1;
-            foreach (Storage storage in restorePoint.Storages)
-            {
-                StorageRepo.CreateArchive(
-                    storage.JobObjects,
-                    restorePointPath,
-                    $"Storage{storageNumber++}.zip");
-            }
-        }
-
-        public string CreateRestorePoint()
+        public override string CreateRestorePoint()
         {
             int restorePointNumber = StorageRepo.GetRestorePointsAmount(BackupJobPath) + 1;
             string restorePointPath = Path.Combine(BackupJobPath, $"RestorePoint{restorePointNumber}");
@@ -57,8 +34,7 @@ namespace Backups.Classes
                 StorageAlgo,
                 StorageRepo,
                 BackupJobPath,
-                restorePointNumber,
-                DateTime.Now);
+                restorePointNumber);
             RestorePoints.AddLast(restorePoint);
             foreach (Storage storage in storages)
             {
@@ -71,13 +47,13 @@ namespace Backups.Classes
             return restorePointPath;
         }
 
-        public JobObject AddJobObject(JobObject jobObject)
+        public override JobObject AddJobObject(JobObject jobObject)
         {
             JobObjects.Add(jobObject);
             return jobObject;
         }
 
-        public void DeleteJobObject(JobObject jobObject)
+        public override void DeleteJobObject(JobObject jobObject)
         {
             JobObjects.Remove(jobObject);
         }

@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using Backups.Interfaces;
 
 namespace Backups.Classes
 {
-    public class Storage
+    public class Storage : StorageComponent
     {
         public Storage(List<JobObject> jobObjects, string path, int id)
         {
@@ -10,9 +11,5 @@ namespace Backups.Classes
             Path = path;
             Id = id;
         }
-
-        public List<JobObject> JobObjects { get; }
-        public string Path { get; }
-        public int Id { get; }
     }
 }
