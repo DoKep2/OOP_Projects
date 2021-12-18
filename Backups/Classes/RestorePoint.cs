@@ -1,14 +1,13 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Backups.Exceptions;
 using Backups.Interfaces;
 
 namespace Backups.Classes
 {
-    public class RestorePoint
+    public class RestorePoint : RestorePointComponent
     {
-        private List<Storage> _storages;
-        private IStorageAlgo _storageAlgo;
-
         public RestorePoint(
             List<Storage> storages,
             IStorageAlgo storageAlgo,
@@ -16,15 +15,22 @@ namespace Backups.Classes
             string path,
             int id)
         {
-            _storages = storages ?? throw new BackupsException("Create restore point error: storages can't be null");
-            _storageAlgo = storageAlgo ??
-                           throw new BackupsException("Create restore point error: storageAlgo can't be null");
-            if (storageRepo == null)
+            Storages = storages; /*?? throw new BackupsException("Create restore point error: storages can't be null");*/
+            StorageAlgo = storageAlgo;
+            StorageRepo = storageRepo;
+            Id = id;
+            Path = path; /*??
+                           throw new BackupsException("Create restore point error: storageAlgo can't be null");*/
+            /*if (storageRepo == null)
             {
                 throw new BackupsException("Create restore point error: storageRepo can't be null");
-            }
-
-            storageRepo.CreateFolder(path, $"RestorePoint{id}");
+            }*/
+            /*storageRepo?.CreateFolder(path, $"RestorePoint{id}");*/
         }
+
+        /*public Storage FindStorage(Storage storage)
+        {
+            return Storages.SingleOrDefault(st => Equals(st, storage));
+        }*/
     }
 }

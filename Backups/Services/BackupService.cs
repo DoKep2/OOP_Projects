@@ -6,23 +6,22 @@ using Backups.Interfaces;
 
 namespace Backups.Services
 {
-    public class BackupService
+    public class BackupService : BackupServiceComponent
     {
-        private readonly List<BackupJob> _backupJobs = new ();
-        public BackupJob CreateBackupJob(
+        public override BackupJob CreateBackupJob(
             IStorageAlgo storageAlgo,
             IStorageRepo storageRepo,
             string backupJobName,
             string rootPath)
         {
             var newBackupJob = new BackupJob(storageAlgo, storageRepo, rootPath, backupJobName);
-            _backupJobs.Add(newBackupJob);
+            BackupJobs.Add(newBackupJob);
             return newBackupJob;
         }
 
-        public BackupJob GetBackUpJob(string name)
+        public override BackupJob GetBackUpJob(string name)
         {
-            foreach (BackupJob currentBackupJob in _backupJobs
+            foreach (BackupJob currentBackupJob in BackupJobs
                 .Where(currentBackupJob => name.Equals(currentBackupJob.BackupJobName)))
             {
                 return currentBackupJob;

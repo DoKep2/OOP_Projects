@@ -5,6 +5,6 @@ namespace Backups.Interfaces
 {
     public interface IStorageAlgo
     {
-        List<Storage> CreateStorages(List<JobObject> jobObjects);
+        List<Storage> CreateStorages(List<JobObject> jobObjects, string pathToRestorePoint, int id);
     }
 }

@@ -1,3 +1,5 @@
+using System.Runtime.Serialization;
+
 namespace Backups.Classes
 {
     public class JobObject
@@ -7,6 +9,8 @@ namespace Backups.Classes
             Path = path;
             Name = name;
         }
+
+        /*[DataMember]*/
 
         public string Path { get; }
         public string Name { get; }

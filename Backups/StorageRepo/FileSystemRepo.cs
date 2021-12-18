@@ -14,6 +14,28 @@ namespace Backups.StorageRepo
             Directory.CreateDirectory(Path.Combine(path, name));
         }
 
+        public void DeleteFolder(string path, string name)
+        {
+            string fullPath = Path.Combine(path, name);
+            if (!FolderExists(fullPath))
+            {
+                throw new Exception("No such folder to delete");
+            }
+
+            Directory.Delete(fullPath, true);
+        }
+
+        public void DeleteArchive(string path, string name)
+        {
+            string fullPath = Path.Combine(path, name);
+            if (!FileExists(fullPath))
+            {
+                throw new Exception("No such file to delete");
+            }
+
+            File.Delete(fullPath);
+        }
+
         public void CreateArchive(List<JobObject> entities, string pathToFolder, string archiveName)
         {
             string zipPath = Path.Combine(pathToFolder, archiveName);
@@ -42,7 +64,7 @@ namespace Backups.StorageRepo
                     currentMaxRestorePointNumber, int.Parse(directoryPath[^1].ToString()));
             }
 
-            return currentMaxRestorePointNumber + 1;
+            return currentMaxRestorePointNumber;
         }
 
         public int GetStoragesAmount(string restorePointPath)
