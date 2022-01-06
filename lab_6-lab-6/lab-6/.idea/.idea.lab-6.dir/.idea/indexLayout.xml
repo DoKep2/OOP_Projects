@@ -2,11 +2,7 @@
 <project version="4">
   <component name="UserContentModel">
     <attachedFolders />
-    <explicitIncludes>
-      <Path>OopLabs.sln.DotSettings.user</Path>
-      <Path>lab-6</Path>
-      <Path>lab_6-lab-6</Path>
-    </explicitIncludes>
+    <explicitIncludes />
     <explicitExcludes />
   </component>
 </project>
